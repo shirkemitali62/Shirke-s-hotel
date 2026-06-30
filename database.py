@@ -1,7 +1,12 @@
 # database.py - SQLite Database Setup
-import sqlite3
+import sqlite3, os
 
-DB_NAME = "food_orders.db"
+# On Vercel (and most serverless platforms) only /tmp is writable.
+# Locally it still uses the project folder so nothing changes on your PC.
+if os.environ.get("VERCEL"):
+    DB_NAME = "/tmp/food_orders.db"
+else:
+    DB_NAME = "food_orders.db"
 
 def get_connection():
     conn = sqlite3.connect(DB_NAME)
